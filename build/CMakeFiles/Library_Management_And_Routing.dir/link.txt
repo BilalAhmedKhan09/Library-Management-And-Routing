@@ -1,0 +1,3 @@
+"D:\Apps\Visual Studio\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E rm -f CMakeFiles\Library_Management_And_Routing.dir/objects.a
+C:\Qt\Tools\mingw1310_64\bin\ar.exe qc CMakeFiles\Library_Management_And_Routing.dir/objects.a @CMakeFiles\Library_Management_And_Routing.dir\objects1.rsp
+c:\Qt\Tools\mingw1310_64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Library_Management_And_Routing.dir/objects.a -Wl,--no-whole-archive -o Library_Management_And_Routing.exe -Wl,--out-implib,libLibrary_Management_And_Routing.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Library_Management_And_Routing.dir\linkLibs.rsp

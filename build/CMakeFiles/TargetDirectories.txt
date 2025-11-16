@@ -1,0 +1,5 @@
+C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build/CMakeFiles/Library_Management_And_Routing.dir
+C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build/CMakeFiles/edit_cache.dir
+C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build/CMakeFiles/rebuild_cache.dir
+C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build/CMakeFiles/Library_Management_And_Routing_autogen_timestamp_deps.dir
+C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build/CMakeFiles/Library_Management_And_Routing_autogen.dir

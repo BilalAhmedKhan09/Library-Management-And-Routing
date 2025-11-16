@@ -1,0 +1,20 @@
+[
+{
+  "directory": "C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build",
+  "command": "c:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Library_Management_And_Routing.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Library_Management_And_Routing.dir\\Library_Management_And_Routing_autogen\\mocs_compilation.cpp.obj -c \"C:\\Users\\pc\\Desktop\\Uni documents\\DSA\\Library_Management_And_Routing\\build\\Library_Management_And_Routing_autogen\\mocs_compilation.cpp\"",
+  "file": "C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build/Library_Management_And_Routing_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/Library_Management_And_Routing.dir/Library_Management_And_Routing_autogen/mocs_compilation.cpp.obj"
+},
+{
+  "directory": "C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build",
+  "command": "c:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Library_Management_And_Routing.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Library_Management_And_Routing.dir\\main.cpp.obj -c \"C:\\Users\\pc\\Desktop\\Uni documents\\DSA\\Library_Management_And_Routing\\main.cpp\"",
+  "file": "C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/main.cpp",
+  "output": "CMakeFiles/Library_Management_And_Routing.dir/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/build",
+  "command": "c:\\Qt\\Tools\\mingw1310_64\\bin\\g++.exe -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 @CMakeFiles/Library_Management_And_Routing.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\Library_Management_And_Routing.dir\\mainwindow.cpp.obj -c \"C:\\Users\\pc\\Desktop\\Uni documents\\DSA\\Library_Management_And_Routing\\mainwindow.cpp\"",
+  "file": "C:/Users/pc/Desktop/Uni documents/DSA/Library_Management_And_Routing/mainwindow.cpp",
+  "output": "CMakeFiles/Library_Management_And_Routing.dir/mainwindow.cpp.obj"
+}
+]
