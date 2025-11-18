@@ -24,6 +24,7 @@ set(PROJECT_SOURCES
 qt_add_executable(Library_Management_And_Routing
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
+
 )
 
 target_link_libraries(Library_Management_And_Routing PRIVATE Qt6::Widgets)

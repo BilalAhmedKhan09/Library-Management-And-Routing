@@ -141,6 +141,7 @@ C:/Users/pc/Desktop/Uni\ documents/DSA/Library_Management_And_Routing/build/Desk
   C:/Qt/6.10.0/mingw_64/include/QtGui/qkeysequence.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qpaintdevice.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qpalette.h \
+  C:/Qt/6.10.0/mingw_64/include/QtGui/qpen.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qpixelformat.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qpixmap.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qpolygon.h \
@@ -153,7 +154,9 @@ C:/Users/pc/Desktop/Uni\ documents/DSA/Library_Management_And_Routing/build/Desk
   C:/Qt/6.10.0/mingw_64/include/QtGui/qtransform.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h \
+  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QGraphicsScene \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QMainWindow \
+  C:/Qt/6.10.0/mingw_64/include/QtWidgets/qgraphicsscene.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qmainwindow.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qsizepolicy.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qtabwidget.h \

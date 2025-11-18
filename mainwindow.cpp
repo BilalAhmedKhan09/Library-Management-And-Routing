@@ -1,18 +1,23 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QString>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include<QGraphicsEllipseItem>
+#include <QPainter>
+#include <QGraphicsSimpleTextItem>
 
 using namespace std;
 
-struct Node {
+struct Record {
     string name;
     int ID;
     int height;
-    Node *left;
-    Node *right;
+    Record *left;
+    Record *right;
 };
 
-int getheight(Node *n){
+int getheight(Record *n){
     if(n == NULL){
         return 0;
     }
@@ -21,8 +26,8 @@ int getheight(Node *n){
     }
 }
 
-Node * newnode(int id, string name){
-    Node *n = new Node;
+Record * newnode(int id, string name){
+    Record *n = new Record;
     n->height = 1;
     n->ID = id;
     n->name = name;
@@ -31,7 +36,7 @@ Node * newnode(int id, string name){
     return n;
 }
 
-int getbalancefactor(Node *n){
+int getbalancefactor(Record *n){
     if(n == NULL){
         return 0;
     }
@@ -44,7 +49,7 @@ int max (int a , int b){
     return a>b?a:b;
 }
 
-Node *minimum(Node *n){
+Record *minimum(Record *n){
     if(n == NULL){
         return n;
     }
@@ -54,9 +59,9 @@ Node *minimum(Node *n){
     return minimum(n->left);
 }
 
-Node *leftrotate(Node *b){
-    Node *d = b->right;
-    Node *c = d->left;
+Record *leftrotate(Record *b){
+    Record *d = b->right;
+    Record *c = d->left;
 
     d->left = b;
     b->right = c;
@@ -65,9 +70,9 @@ Node *leftrotate(Node *b){
     return d;
 }
 
-Node *rightrotate(Node *d){
-    Node *b = d->left;
-    Node *c = b->right;
+Record *rightrotate(Record *d){
+    Record *b = d->left;
+    Record *c = b->right;
 
     b->right = d;
     d->left = c;
@@ -76,7 +81,7 @@ Node *rightrotate(Node *d){
     return b;
 }
 
-Node *Insert(Node*n, int ID, string name){
+Record *Insert(Record *n, int ID, string name){
     if(n == NULL){
         return newnode(ID, name);
     }
@@ -105,7 +110,7 @@ Node *Insert(Node*n, int ID, string name){
     return n;
 }
 
-Node *Delete(Node *n, int key){
+Record *Delete(Record *n, int key){
     if(n == NULL){
         return n;
     }
@@ -117,16 +122,16 @@ Node *Delete(Node *n, int key){
     }
     else{
         if(n->right == NULL){
-            Node *temp = n->left;
+            Record *temp = n->left;
             delete n;
             return temp;
         }
         if(n->left == NULL){
-            Node *temp = n->right;
+            Record *temp = n->right;
             delete n;
             return temp;
         }
-        Node *temp = minimum(n->right);
+        Record *temp = minimum(n->right);
         n->ID = temp->ID;
         n->name = temp->name;
         n->right = Delete(n->right, temp->ID);
@@ -150,7 +155,7 @@ Node *Delete(Node *n, int key){
     return n;
 }
 
-Node* search(Node *root, int val){
+Record* search(Record *root, int val){
     if(root == NULL){
         return NULL;
     }
@@ -168,8 +173,17 @@ Node* search(Node *root, int val){
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , scene(new QGraphicsScene(this)) // Initialize scene in the constructor initializer list
+    , view(new QGraphicsView(scene, this)) // Initialize view with scene
 {
     ui->setupUi(this);
+    // makes the right side widget the parent so the graph is built there
+    view->setParent(ui->Graphwidget);
+    // To make sure the graph fills the widget area
+    QVBoxLayout *graphLayout = new QVBoxLayout(ui->Graphwidget);
+    graphLayout->addWidget(view);
+    // to make the graph and other widgets consistent set a screen size
+     scene->setSceneRect(0, 0, 800, 600);
 }
 
 MainWindow::~MainWindow()
@@ -177,14 +191,14 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-Node *root = nullptr;
+Record *root = nullptr; // to start a tree initially
 
 void MainWindow::on_Search_clicked() // if clicked
 {
     int ID = ui->searchID->text().toInt(); // converted to int
     if(!ui->searchID->text().isEmpty() && ID >= 0){ // checks for invalid search IDs
         qDebug() << "Searching for ID:" << ID;
-        Node *n = search(root, ID);
+        Record *n = search(root, ID);
         // Display "Not Found" if search returns the empty string sentinel
         if (n == NULL) {
             ui->searchout->setText("Record Not Found");
@@ -210,3 +224,30 @@ void MainWindow::on_AddRecord_clicked()
         ui->ID->setText("Wrong input");
     }
 }
+
+class Node: public QGraphicsEllipseItem{
+    QGraphicsTextItem *label;
+public:
+    Node(qreal x, qreal y, qreal radius, QString name ,QGraphicsItem *parent = nullptr)
+        : QGraphicsEllipseItem(x, y, 2 * radius, 2 * radius, parent) {
+        QColor colour(50, 150, 250); // Lightblue
+        setBrush(QBrush(colour)); // sets node colour
+        setPen(QPen(Qt::black, 1)); // sets border colour
+        label = new QGraphicsTextItem(name, this); // This binds the name to the actual node to move along with it
+        label->setDefaultTextColor(Qt::black);
+        //Get the length of the text and align it with the centre of the node
+        QRectF textRect = label->boundingRect();
+        qreal w = textRect.width()/2;
+        label->setPos(115.0-w, 77.0);
+        //For interactivity (drag and such)
+        setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
+    }
+};
+
+void MainWindow::on_AddNode_clicked()
+{
+    QString name = ui->Nname->text();
+    Node *n = new Node(100,100,15,name);
+    scene->addItem(n);
+}
+

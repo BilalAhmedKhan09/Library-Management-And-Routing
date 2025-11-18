@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include<QGraphicsScene>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,7 +24,11 @@ private slots:
 
     void on_AddRecord_clicked();
 
+    void on_AddNode_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+    QGraphicsView *view;
 };
 #endif // MAINWINDOW_H

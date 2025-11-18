@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -27,7 +28,9 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QWidget *widget;
+    QWidget *Graphwidget;
+    QWidget *Selectionwidget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout;
     QTextEdit *textEdit;
     QLabel *label;
@@ -38,6 +41,22 @@ public:
     QLineEdit *Name;
     QLineEdit *ID;
     QPushButton *AddRecord;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout_2;
+    QTextEdit *textEdit_2;
+    QLabel *label_4;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label_3;
+    QLineEdit *Nname;
+    QPushButton *AddNode;
+    QLabel *label_5;
+    QHBoxLayout *horizontalLayout;
+    QLabel *label_6;
+    QLineEdit *N2;
+    QHBoxLayout *horizontalLayout_3;
+    QLabel *label_7;
+    QLineEdit *N1;
+    QPushButton *AddEdge;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -45,68 +64,150 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(800, 600);
+        MainWindow->resize(759, 605);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
-        widget = new QWidget(centralwidget);
-        widget->setObjectName("widget");
-        widget->setGeometry(QRect(0, 0, 201, 289));
-        verticalLayout = new QVBoxLayout(widget);
+        Graphwidget = new QWidget(centralwidget);
+        Graphwidget->setObjectName("Graphwidget");
+        Graphwidget->setGeometry(QRect(280, -30, 451, 591));
+        Graphwidget->setMinimumSize(QSize(451, 591));
+        Selectionwidget = new QWidget(centralwidget);
+        Selectionwidget->setObjectName("Selectionwidget");
+        Selectionwidget->setGeometry(QRect(0, 0, 271, 561));
+        layoutWidget = new QWidget(Selectionwidget);
+        layoutWidget->setObjectName("layoutWidget");
+        layoutWidget->setGeometry(QRect(0, 0, 271, 281));
+        verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        textEdit = new QTextEdit(widget);
+        textEdit = new QTextEdit(layoutWidget);
         textEdit->setObjectName("textEdit");
         textEdit->setReadOnly(true);
 
         verticalLayout->addWidget(textEdit);
 
-        label = new QLabel(widget);
+        label = new QLabel(layoutWidget);
         label->setObjectName("label");
 
-        verticalLayout->addWidget(label);
+        verticalLayout->addWidget(label, 0, Qt::AlignmentFlag::AlignHCenter);
 
-        searchID = new QLineEdit(widget);
+        searchID = new QLineEdit(layoutWidget);
         searchID->setObjectName("searchID");
 
         verticalLayout->addWidget(searchID);
 
-        Search = new QPushButton(widget);
+        Search = new QPushButton(layoutWidget);
         Search->setObjectName("Search");
 
         verticalLayout->addWidget(Search);
 
-        searchout = new QLineEdit(widget);
+        searchout = new QLineEdit(layoutWidget);
         searchout->setObjectName("searchout");
         searchout->setReadOnly(true);
 
         verticalLayout->addWidget(searchout);
 
-        label_2 = new QLabel(widget);
+        label_2 = new QLabel(layoutWidget);
         label_2->setObjectName("label_2");
 
-        verticalLayout->addWidget(label_2);
+        verticalLayout->addWidget(label_2, 0, Qt::AlignmentFlag::AlignHCenter);
 
-        Name = new QLineEdit(widget);
+        Name = new QLineEdit(layoutWidget);
         Name->setObjectName("Name");
 
         verticalLayout->addWidget(Name);
 
-        ID = new QLineEdit(widget);
+        ID = new QLineEdit(layoutWidget);
         ID->setObjectName("ID");
 
         verticalLayout->addWidget(ID);
 
-        AddRecord = new QPushButton(widget);
+        AddRecord = new QPushButton(layoutWidget);
         AddRecord->setObjectName("AddRecord");
 
         verticalLayout->addWidget(AddRecord);
 
+        widget = new QWidget(Selectionwidget);
+        widget->setObjectName("widget");
+        widget->setGeometry(QRect(0, 290, 271, 261));
+        verticalLayout_2 = new QVBoxLayout(widget);
+        verticalLayout_2->setObjectName("verticalLayout_2");
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        textEdit_2 = new QTextEdit(widget);
+        textEdit_2->setObjectName("textEdit_2");
+        textEdit_2->setReadOnly(true);
+
+        verticalLayout_2->addWidget(textEdit_2);
+
+        label_4 = new QLabel(widget);
+        label_4->setObjectName("label_4");
+
+        verticalLayout_2->addWidget(label_4, 0, Qt::AlignmentFlag::AlignHCenter);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName("horizontalLayout_2");
+        label_3 = new QLabel(widget);
+        label_3->setObjectName("label_3");
+
+        horizontalLayout_2->addWidget(label_3);
+
+        Nname = new QLineEdit(widget);
+        Nname->setObjectName("Nname");
+
+        horizontalLayout_2->addWidget(Nname);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_2);
+
+        AddNode = new QPushButton(widget);
+        AddNode->setObjectName("AddNode");
+
+        verticalLayout_2->addWidget(AddNode);
+
+        label_5 = new QLabel(widget);
+        label_5->setObjectName("label_5");
+
+        verticalLayout_2->addWidget(label_5, 0, Qt::AlignmentFlag::AlignHCenter);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName("horizontalLayout");
+        label_6 = new QLabel(widget);
+        label_6->setObjectName("label_6");
+
+        horizontalLayout->addWidget(label_6);
+
+        N2 = new QLineEdit(widget);
+        N2->setObjectName("N2");
+
+        horizontalLayout->addWidget(N2);
+
+
+        verticalLayout_2->addLayout(horizontalLayout);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName("horizontalLayout_3");
+        label_7 = new QLabel(widget);
+        label_7->setObjectName("label_7");
+
+        horizontalLayout_3->addWidget(label_7);
+
+        N1 = new QLineEdit(widget);
+        N1->setObjectName("N1");
+
+        horizontalLayout_3->addWidget(N1);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_3);
+
+        AddEdge = new QPushButton(widget);
+        AddEdge->setObjectName("AddEdge");
+
+        verticalLayout_2->addWidget(AddEdge);
+
         MainWindow->setCentralWidget(centralwidget);
-        textEdit->raise();
-        searchID->raise();
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 22));
+        menubar->setGeometry(QRect(0, 0, 759, 22));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -127,17 +228,36 @@ public:
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:700;\">Library Records :</span></p></body></html>", nullptr));
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:700;\">Library Records :</span></p></body></html>", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", " Search by Book ID:", nullptr));
         searchID->setPlaceholderText(QCoreApplication::translate("MainWindow", "ID", nullptr));
         Search->setText(QCoreApplication::translate("MainWindow", "Search", nullptr));
         searchout->setText(QString());
+        searchout->setPlaceholderText(QCoreApplication::translate("MainWindow", "Book Name", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Add Record:", nullptr));
         Name->setText(QString());
         Name->setPlaceholderText(QCoreApplication::translate("MainWindow", "Name", nullptr));
         ID->setText(QString());
         ID->setPlaceholderText(QCoreApplication::translate("MainWindow", "ID", nullptr));
         AddRecord->setText(QCoreApplication::translate("MainWindow", "Add record", nullptr));
+        textEdit_2->setMarkdown(QCoreApplication::translate("MainWindow", "**Graph Creation :**\n"
+"\n"
+"", nullptr));
+        textEdit_2->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p align=\"center\" style=\" margin-top:6px; margin-bottom:6px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-weight:700;\">Graph Creation :</span></p></body></html>", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "Node Creation:", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Name : ", nullptr));
+        AddNode->setText(QCoreApplication::translate("MainWindow", "Add Node", nullptr));
+        label_5->setText(QCoreApplication::translate("MainWindow", "Edge Creation:", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "Node 1", nullptr));
+        label_7->setText(QCoreApplication::translate("MainWindow", "Node 2", nullptr));
+        AddEdge->setText(QCoreApplication::translate("MainWindow", "Add Edge", nullptr));
     } // retranslateUi
 
 };
