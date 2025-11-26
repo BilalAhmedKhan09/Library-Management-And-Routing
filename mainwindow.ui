@@ -136,7 +136,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -213,7 +213,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="N2"/>
+         <widget class="QLineEdit" name="N1"/>
         </item>
        </layout>
       </item>
@@ -227,7 +227,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="N1"/>
+         <widget class="QLineEdit" name="N2"/>
         </item>
        </layout>
       </item>

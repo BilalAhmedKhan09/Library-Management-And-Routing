@@ -41,7 +41,7 @@ public:
     QLineEdit *Name;
     QLineEdit *ID;
     QPushButton *AddRecord;
-    QWidget *widget;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_2;
     QTextEdit *textEdit_2;
     QLabel *label_4;
@@ -52,10 +52,10 @@ public:
     QLabel *label_5;
     QHBoxLayout *horizontalLayout;
     QLabel *label_6;
-    QLineEdit *N2;
+    QLineEdit *N1;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_7;
-    QLineEdit *N1;
+    QLineEdit *N2;
     QPushButton *AddEdge;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -76,7 +76,7 @@ public:
         Selectionwidget->setGeometry(QRect(0, 0, 271, 561));
         layoutWidget = new QWidget(Selectionwidget);
         layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(0, 0, 271, 281));
+        layoutWidget->setGeometry(QRect(0, 0, 271, 289));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -127,31 +127,31 @@ public:
 
         verticalLayout->addWidget(AddRecord);
 
-        widget = new QWidget(Selectionwidget);
-        widget->setObjectName("widget");
-        widget->setGeometry(QRect(0, 290, 271, 261));
-        verticalLayout_2 = new QVBoxLayout(widget);
+        layoutWidget1 = new QWidget(Selectionwidget);
+        layoutWidget1->setObjectName("layoutWidget1");
+        layoutWidget1->setGeometry(QRect(0, 300, 271, 251));
+        verticalLayout_2 = new QVBoxLayout(layoutWidget1);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        textEdit_2 = new QTextEdit(widget);
+        textEdit_2 = new QTextEdit(layoutWidget1);
         textEdit_2->setObjectName("textEdit_2");
         textEdit_2->setReadOnly(true);
 
         verticalLayout_2->addWidget(textEdit_2);
 
-        label_4 = new QLabel(widget);
+        label_4 = new QLabel(layoutWidget1);
         label_4->setObjectName("label_4");
 
         verticalLayout_2->addWidget(label_4, 0, Qt::AlignmentFlag::AlignHCenter);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName("horizontalLayout_2");
-        label_3 = new QLabel(widget);
+        label_3 = new QLabel(layoutWidget1);
         label_3->setObjectName("label_3");
 
         horizontalLayout_2->addWidget(label_3);
 
-        Nname = new QLineEdit(widget);
+        Nname = new QLineEdit(layoutWidget1);
         Nname->setObjectName("Nname");
 
         horizontalLayout_2->addWidget(Nname);
@@ -159,47 +159,47 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_2);
 
-        AddNode = new QPushButton(widget);
+        AddNode = new QPushButton(layoutWidget1);
         AddNode->setObjectName("AddNode");
 
         verticalLayout_2->addWidget(AddNode);
 
-        label_5 = new QLabel(widget);
+        label_5 = new QLabel(layoutWidget1);
         label_5->setObjectName("label_5");
 
         verticalLayout_2->addWidget(label_5, 0, Qt::AlignmentFlag::AlignHCenter);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
-        label_6 = new QLabel(widget);
+        label_6 = new QLabel(layoutWidget1);
         label_6->setObjectName("label_6");
 
         horizontalLayout->addWidget(label_6);
 
-        N2 = new QLineEdit(widget);
-        N2->setObjectName("N2");
+        N1 = new QLineEdit(layoutWidget1);
+        N1->setObjectName("N1");
 
-        horizontalLayout->addWidget(N2);
+        horizontalLayout->addWidget(N1);
 
 
         verticalLayout_2->addLayout(horizontalLayout);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName("horizontalLayout_3");
-        label_7 = new QLabel(widget);
+        label_7 = new QLabel(layoutWidget1);
         label_7->setObjectName("label_7");
 
         horizontalLayout_3->addWidget(label_7);
 
-        N1 = new QLineEdit(widget);
-        N1->setObjectName("N1");
+        N2 = new QLineEdit(layoutWidget1);
+        N2->setObjectName("N2");
 
-        horizontalLayout_3->addWidget(N1);
+        horizontalLayout_3->addWidget(N2);
 
 
         verticalLayout_2->addLayout(horizontalLayout_3);
 
-        AddEdge = new QPushButton(widget);
+        AddEdge = new QPushButton(layoutWidget1);
         AddEdge->setObjectName("AddEdge");
 
         verticalLayout_2->addWidget(AddEdge);
