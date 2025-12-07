@@ -6,6 +6,8 @@
 #include<QGraphicsEllipseItem>
 #include <QPainter>
 #include <QGraphicsSimpleTextItem>
+#include <QMap>
+#include <QString>
 
 using namespace std;
 
@@ -225,29 +227,124 @@ void MainWindow::on_AddRecord_clicked()
     }
 }
 
-class Node: public QGraphicsEllipseItem{
-    QGraphicsTextItem *label;
+
+class Node : public QGraphicsEllipseItem {
 public:
+    QGraphicsTextItem *label;
+    QList<QGraphicsLineItem*> edges; // connected edges
+
     Node(qreal x, qreal y, qreal radius, QString name ,QGraphicsItem *parent = nullptr)
-        : QGraphicsEllipseItem(x, y, 2 * radius, 2 * radius, parent) {
-        QColor colour(50, 150, 250); // Lightblue
-        setBrush(QBrush(colour)); // sets node colour
-        setPen(QPen(Qt::black, 1)); // sets border colour
-        label = new QGraphicsTextItem(name, this); // This binds the name to the actual node to move along with it
+        : QGraphicsEllipseItem(x, y, 2*radius, 2*radius, parent)
+    {
+        QColor colour(50, 150, 250);
+        setBrush(QBrush(colour)); // fils colour blue in the node
+        setPen(QPen(Qt::black, 1));
+        label = new QGraphicsTextItem(name, this);
         label->setDefaultTextColor(Qt::black);
-        //Get the length of the text and align it with the centre of the node
         QRectF textRect = label->boundingRect();
-        qreal w = textRect.width()/2;
-        label->setPos(115.0-w, 77.0);
-        //For interactivity (drag and such)
+        QRectF r = rect(); // ellipse rect
+        qreal a = textRect.height() + 30; // label just above the node
+        label->setPos(x, a);
         setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
     }
+
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override {
+        QPointF newPos = value.toPointF();
+        for (QGraphicsLineItem* line : edges) {
+            Node* otherNode = reinterpret_cast<Node*>(line->data(1).value<void*>());
+            if (otherNode == this) {
+                QLineF l(line->line());
+                l.setP1(mapToScene(rect().center()));
+                line->setLine(l);
+            } else {
+                QLineF l(line->line());
+                l.setP2(mapToScene(rect().center()));
+                line->setLine(l);
+            }
+        }
+        return QGraphicsEllipseItem::itemChange(change, value);
+    }
 };
+
+class Edge :public QGraphicsLineItem {
+public:
+    Node *n1;
+    Node *n2;
+
+    Edge(Node *a, Node *b) {
+        n1 = a;
+        n2 = b;
+        setPen(QPen(Qt::black, 1));
+        updatePosition();
+
+        // move with nodes:
+        a->installSceneEventFilter(this);
+        b->installSceneEventFilter(this);
+    }
+
+    void updatePosition() {
+        QPointF p1 = n1->sceneBoundingRect().center();
+        QPointF p2 = n2->sceneBoundingRect().center();
+        setLine(QLineF(p1, p2));
+    }
+
+    bool sceneEventFilter(QObject *watched, QEvent *event) {
+        if (event->type() == QEvent::GraphicsSceneMove) {
+            updatePosition();
+        }
+        return false;
+    }
+};
+
+QMap<QString, Node*> nodeMap;  // store all nodes by name
 
 void MainWindow::on_AddNode_clicked()
 {
     QString name = ui->Nname->text();
     Node *n = new Node(100,100,15,name);
     scene->addItem(n);
+    nodeMap[name] = n;
+}
+
+void MainWindow::on_AddEdge_clicked()
+{
+    QString name1 = ui->N1->text();
+    QString name2 = ui->N2->text();
+
+    if (name1.isEmpty() || name2.isEmpty()) {
+        return; // invalid input
+    }
+
+    Node *node1 = nullptr;
+    Node *node2 = nullptr;
+
+    // find the nodes in the scene by label
+    for (QGraphicsItem *item : scene->items()) {
+        Node *n = dynamic_cast<Node*>(item);
+        if (n) {
+            if (n->label->toPlainText() == name1) node1 = n;
+            if (n->label->toPlainText() == name2) node2 = n;
+        }
+    }
+
+    if (!node1 || !node2) {
+        return; // nodes not found
+    }
+
+    // create the edge
+    QPointF p1 = node1->mapToScene(node1->rect().center());
+    QPointF p2 = node2->mapToScene(node2->rect().center());
+    QGraphicsLineItem *line = new QGraphicsLineItem(QLineF(p1, p2));
+    scene->addItem(line);
+
+    // store edge in both nodes for movement
+    node1->edges.append(line);
+    node2->edges.append(line);
+
+    // mark which end is which
+    line->setData(0, 0); // temporary, not used for now
+    // store p1/p2 info for automatic movement
+    line->setData(1, QVariant::fromValue<void*>(node1));
+    line->setData(2, QVariant::fromValue<void*>(node2));
 }
 

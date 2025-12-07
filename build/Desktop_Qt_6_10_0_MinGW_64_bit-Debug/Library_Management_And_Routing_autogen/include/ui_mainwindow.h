@@ -76,7 +76,7 @@ public:
         Selectionwidget->setGeometry(QRect(0, 0, 271, 561));
         layoutWidget = new QWidget(Selectionwidget);
         layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(0, 0, 271, 289));
+        layoutWidget->setGeometry(QRect(0, 0, 271, 281));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -129,7 +129,7 @@ public:
 
         layoutWidget1 = new QWidget(Selectionwidget);
         layoutWidget1->setObjectName("layoutWidget1");
-        layoutWidget1->setGeometry(QRect(0, 300, 271, 251));
+        layoutWidget1->setGeometry(QRect(0, 290, 271, 261));
         verticalLayout_2 = new QVBoxLayout(layoutWidget1);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);

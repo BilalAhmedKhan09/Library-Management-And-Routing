@@ -6774,6 +6774,18 @@
 			"value" : "C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6"
 		},
 		{
+			"name" : "Qt_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for Qt."
+				}
+			],
+			"type" : "PATH",
+			"value" : "Qt_DIR-NOTFOUND"
+		},
+		{
 			"name" : "Vulkan_GLSLANG_VALIDATOR_EXECUTABLE",
 			"properties" : 
 			[

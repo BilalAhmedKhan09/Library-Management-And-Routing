@@ -26,6 +26,8 @@ private slots:
 
     void on_AddNode_clicked();
 
+    void on_AddEdge_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;

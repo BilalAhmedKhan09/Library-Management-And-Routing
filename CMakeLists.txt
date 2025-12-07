@@ -9,10 +9,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Tell CMake where Qt is located
+# Path to Qt installation
 set(CMAKE_PREFIX_PATH "C:/Qt/6.5.3/mingw_64/lib/cmake")
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+# Find Qt 6 modules
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Gui)
 
 set(PROJECT_SOURCES
     main.cpp
@@ -24,9 +25,10 @@ set(PROJECT_SOURCES
 qt_add_executable(Library_Management_And_Routing
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
-
 )
 
-target_link_libraries(Library_Management_And_Routing PRIVATE Qt6::Widgets)
+target_link_libraries(Library_Management_And_Routing
+    PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets
+)
 
 qt_finalize_executable(Library_Management_And_Routing)
