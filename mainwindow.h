@@ -28,6 +28,8 @@ private slots:
 
     void on_AddEdge_clicked();
 
+    void on_dijekstra_clicked();
+
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;

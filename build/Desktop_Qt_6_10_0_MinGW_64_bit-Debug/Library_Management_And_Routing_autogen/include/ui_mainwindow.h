@@ -16,6 +16,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPlainTextEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
@@ -56,7 +57,18 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_7;
     QLineEdit *N2;
+    QHBoxLayout *horizontalLayout_6;
+    QLabel *label_10;
+    QLineEdit *weight;
     QPushButton *AddEdge;
+    QHBoxLayout *horizontalLayout_4;
+    QLabel *label_8;
+    QLineEdit *source;
+    QHBoxLayout *horizontalLayout_5;
+    QLabel *label_9;
+    QLineEdit *dest;
+    QPushButton *dijekstra;
+    QPlainTextEdit *pathOut;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -64,19 +76,19 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(759, 605);
+        MainWindow->resize(759, 816);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         Graphwidget = new QWidget(centralwidget);
         Graphwidget->setObjectName("Graphwidget");
-        Graphwidget->setGeometry(QRect(280, -30, 451, 591));
+        Graphwidget->setGeometry(QRect(310, 30, 451, 741));
         Graphwidget->setMinimumSize(QSize(451, 591));
         Selectionwidget = new QWidget(centralwidget);
         Selectionwidget->setObjectName("Selectionwidget");
-        Selectionwidget->setGeometry(QRect(0, 0, 271, 561));
+        Selectionwidget->setGeometry(QRect(0, 30, 301, 751));
         layoutWidget = new QWidget(Selectionwidget);
         layoutWidget->setObjectName("layoutWidget");
-        layoutWidget->setGeometry(QRect(0, 0, 271, 281));
+        layoutWidget->setGeometry(QRect(0, 0, 301, 289));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(0, 0, 0, 0);
@@ -129,7 +141,7 @@ public:
 
         layoutWidget1 = new QWidget(Selectionwidget);
         layoutWidget1->setObjectName("layoutWidget1");
-        layoutWidget1->setGeometry(QRect(0, 290, 271, 261));
+        layoutWidget1->setGeometry(QRect(0, 300, 301, 441));
         verticalLayout_2 = new QVBoxLayout(layoutWidget1);
         verticalLayout_2->setObjectName("verticalLayout_2");
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -199,10 +211,65 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_3);
 
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setObjectName("horizontalLayout_6");
+        label_10 = new QLabel(layoutWidget1);
+        label_10->setObjectName("label_10");
+
+        horizontalLayout_6->addWidget(label_10);
+
+        weight = new QLineEdit(layoutWidget1);
+        weight->setObjectName("weight");
+
+        horizontalLayout_6->addWidget(weight);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_6);
+
         AddEdge = new QPushButton(layoutWidget1);
         AddEdge->setObjectName("AddEdge");
 
         verticalLayout_2->addWidget(AddEdge);
+
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName("horizontalLayout_4");
+        label_8 = new QLabel(layoutWidget1);
+        label_8->setObjectName("label_8");
+
+        horizontalLayout_4->addWidget(label_8);
+
+        source = new QLineEdit(layoutWidget1);
+        source->setObjectName("source");
+
+        horizontalLayout_4->addWidget(source);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_4);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setObjectName("horizontalLayout_5");
+        label_9 = new QLabel(layoutWidget1);
+        label_9->setObjectName("label_9");
+
+        horizontalLayout_5->addWidget(label_9);
+
+        dest = new QLineEdit(layoutWidget1);
+        dest->setObjectName("dest");
+
+        horizontalLayout_5->addWidget(dest);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_5);
+
+        dijekstra = new QPushButton(layoutWidget1);
+        dijekstra->setObjectName("dijekstra");
+
+        verticalLayout_2->addWidget(dijekstra);
+
+        pathOut = new QPlainTextEdit(layoutWidget1);
+        pathOut->setObjectName("pathOut");
+
+        verticalLayout_2->addWidget(pathOut);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -257,7 +324,11 @@ public:
         label_5->setText(QCoreApplication::translate("MainWindow", "Edge Creation:", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "Node 1", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "Node 2", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "Weight", nullptr));
         AddEdge->setText(QCoreApplication::translate("MainWindow", "Add Edge", nullptr));
+        label_8->setText(QCoreApplication::translate("MainWindow", "Source", nullptr));
+        label_9->setText(QCoreApplication::translate("MainWindow", "Destination", nullptr));
+        dijekstra->setText(QCoreApplication::translate("MainWindow", "Run Dijesktra", nullptr));
     } // retranslateUi
 
 };
