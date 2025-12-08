@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>759</width>
-    <height>605</height>
+    <height>816</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QWidget" name="Graphwidget" native="true">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>-30</y>
+      <x>310</x>
+      <y>30</y>
       <width>451</width>
-      <height>591</height>
+      <height>741</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -34,9 +34,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
-      <width>271</width>
-      <height>561</height>
+      <y>30</y>
+      <width>301</width>
+      <height>751</height>
      </rect>
     </property>
     <widget class="QWidget" name="layoutWidget">
@@ -44,8 +44,8 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>271</width>
-       <height>281</height>
+       <width>301</width>
+       <height>289</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -140,9 +140,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>290</y>
-       <width>271</width>
-       <height>261</height>
+       <y>300</y>
+       <width>301</width>
+       <height>441</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -232,11 +232,63 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </layout>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QLabel" name="label_10">
+          <property name="text">
+           <string>Weight</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="weight"/>
+        </item>
+       </layout>
+      </item>
+      <item>
        <widget class="QPushButton" name="AddEdge">
         <property name="text">
          <string>Add Edge</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>Source</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="source"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_9">
+          <property name="text">
+           <string>Destination</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="dest"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="dijekstra">
+        <property name="text">
+         <string>Run Dijesktra</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPlainTextEdit" name="pathOut"/>
       </item>
      </layout>
     </widget>

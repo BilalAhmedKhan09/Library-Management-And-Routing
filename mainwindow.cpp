@@ -3,11 +3,19 @@
 #include <QString>
 #include <QGraphicsView>
 #include <QGraphicsScene>
-#include<QGraphicsEllipseItem>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsTextItem>
+#include <QGraphicsLineItem>
 #include <QPainter>
-#include <QGraphicsSimpleTextItem>
 #include <QMap>
-#include <QString>
+#include <QQueue>
+#include <QDebug>
+#include <QMessageBox>
+#include <queue>
+#include <utility>
+#include <vector>
+#include <functional>
+
 
 using namespace std;
 
@@ -227,124 +235,253 @@ void MainWindow::on_AddRecord_clicked()
     }
 }
 
+// -----------------------GRAPH FUNCTIONALITIES--------------------------------
+
+class Node;
+class Edge;
+
+// Global adjacency list
+QMap<QString, QList<QPair<QString, int>>> graphAdjacency;
+
+// FIX: global node map
+QMap<QString, Node*> nodeMap;
+
+class Edge : public QGraphicsLineItem {
+public:
+    Node *n1;
+    Node *n2;
+    int weight;
+    QGraphicsTextItem* weightLabel;
+
+    Edge(Node *a, Node *b, int w);
+    void updatePosition();
+    bool sceneEventFilter(QGraphicsItem *watched, QEvent *event) override;
+};
 
 class Node : public QGraphicsEllipseItem {
 public:
     QGraphicsTextItem *label;
-    QList<QGraphicsLineItem*> edges; // connected edges
+    QList<Edge*> edges;
 
-    Node(qreal x, qreal y, qreal radius, QString name ,QGraphicsItem *parent = nullptr)
-        : QGraphicsEllipseItem(x, y, 2*radius, 2*radius, parent)
-    {
-        QColor colour(50, 150, 250);
-        setBrush(QBrush(colour)); // fils colour blue in the node
-        setPen(QPen(Qt::black, 1));
-        label = new QGraphicsTextItem(name, this);
-        label->setDefaultTextColor(Qt::black);
-        QRectF textRect = label->boundingRect();
-        QRectF r = rect(); // ellipse rect
-        qreal a = textRect.height() + 30; // label just above the node
-        label->setPos(x, a);
-        setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
-    }
+    Node(qreal x, qreal y, qreal radius, QString name, QGraphicsItem *parent = nullptr);
 
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override {
-        QPointF newPos = value.toPointF();
-        for (QGraphicsLineItem* line : edges) {
-            Node* otherNode = reinterpret_cast<Node*>(line->data(1).value<void*>());
-            if (otherNode == this) {
-                QLineF l(line->line());
-                l.setP1(mapToScene(rect().center()));
-                line->setLine(l);
-            } else {
-                QLineF l(line->line());
-                l.setP2(mapToScene(rect().center()));
-                line->setLine(l);
-            }
-        }
-        return QGraphicsEllipseItem::itemChange(change, value);
-    }
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+    QString getName() const;
 };
 
-class Edge :public QGraphicsLineItem {
-public:
-    Node *n1;
-    Node *n2;
+Node::Node(qreal x, qreal y, qreal radius, QString name, QGraphicsItem *parent)
+    : QGraphicsEllipseItem(x, y, 2*radius, 2*radius, parent)
+{
+    setBrush(QBrush(QColor(50, 150, 250)));
+    setPen(QPen(Qt::black, 1));
 
-    Edge(Node *a, Node *b) {
-        n1 = a;
-        n2 = b;
-        setPen(QPen(Qt::black, 1));
+    label = new QGraphicsTextItem(name, this);
+    label->setDefaultTextColor(Qt::black);
+
+    // position label under the node circle (centered roughly)
+    QRectF lb = label->boundingRect();
+    qreal labelX = x + radius - lb.width()/2;
+    qreal labelY = y + 2*radius + 10; // a bit below the circle
+    label->setPos(labelX, labelY);
+
+    setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemSendsGeometryChanges);
+}
+
+QVariant Node::itemChange(GraphicsItemChange change, const QVariant &value)
+{
+    if (change == ItemPositionHasChanged) {
+        // avoid Qt container-detach warning by indexing instead of range-for
+        for (int i = 0; i < edges.size(); ++i) {
+            Edge* e = edges.at(i);
+            if (e) e->updatePosition();
+        }
+    }
+    return QGraphicsEllipseItem::itemChange(change, value);
+}
+
+QString Node::getName() const {
+    return label->toPlainText();
+}
+
+Edge::Edge(Node *a, Node *b, int w)
+    : n1(a), n2(b), weight(w)
+{
+    setPen(QPen(Qt::black, 2));
+    updatePosition();
+
+    // FIX: parent text to the edge so Qt manages it safely
+    weightLabel = new QGraphicsTextItem(QString::number(w), this);
+    weightLabel->setDefaultTextColor(Qt::red);
+
+    // event filter for movement
+    a->installSceneEventFilter(this);
+    b->installSceneEventFilter(this);
+
+    // register in nodes
+    a->edges.append(this);
+    b->edges.append(this);
+
+    // adjacency
+    graphAdjacency[a->getName()].append(qMakePair(b->getName(), w));
+    graphAdjacency[b->getName()].append(qMakePair(a->getName(), w));
+}
+
+void Edge::updatePosition()
+{
+    if (!n1 || !n2) return;
+
+    QPointF p1 = n1->sceneBoundingRect().center();
+    QPointF p2 = n2->sceneBoundingRect().center();
+    setLine(QLineF(p1, p2));
+
+    if (scene() && weightLabel) {
+        QPointF mid = (p1 + p2) / 2;
+        weightLabel->setPos(mid);
+    }
+}
+
+bool Edge::sceneEventFilter(QGraphicsItem *watched, QEvent *event)
+{
+    Q_UNUSED(watched);
+    if (event->type() == QEvent::GraphicsSceneMove) {
         updatePosition();
-
-        // move with nodes:
-        a->installSceneEventFilter(this);
-        b->installSceneEventFilter(this);
     }
-
-    void updatePosition() {
-        QPointF p1 = n1->sceneBoundingRect().center();
-        QPointF p2 = n2->sceneBoundingRect().center();
-        setLine(QLineF(p1, p2));
-    }
-
-    bool sceneEventFilter(QObject *watched, QEvent *event) {
-        if (event->type() == QEvent::GraphicsSceneMove) {
-            updatePosition();
-        }
-        return false;
-    }
-};
-
-QMap<QString, Node*> nodeMap;  // store all nodes by name
+    return false;
+}
 
 void MainWindow::on_AddNode_clicked()
 {
     QString name = ui->Nname->text();
-    Node *n = new Node(100,100,15,name);
+    if (name.isEmpty()) {
+        QMessageBox::information(this, "Info", "Enter node name");
+        return;
+    }
+
+    // create node at default position - you can modify to place where you want
+    qreal x = 100;
+    qreal y = 100;
+    qreal radius = 15;
+
+    // if node with same name exists, warn and return
+    if (nodeMap.contains(name)) {
+        QMessageBox::warning(this, "Warning", "Node with this name already exists");
+        return;
+    }
+
+    Node *n = new Node(x, y, radius, name);
     scene->addItem(n);
     nodeMap[name] = n;
 }
 
 void MainWindow::on_AddEdge_clicked()
 {
-    QString name1 = ui->N1->text();
-    QString name2 = ui->N2->text();
+    QString name1 = ui->N1->text().trimmed();
+    QString name2 = ui->N2->text().trimmed();
+    int weight = ui->weight->text().toInt();
 
     if (name1.isEmpty() || name2.isEmpty()) {
-        return; // invalid input
+        QMessageBox::warning(this, "Error", "Enter both node names");
+        return;
+    }
+    if (weight <= 0) {
+        QMessageBox::warning(this, "Error", "Enter a valid positive weight");
+        return;
     }
 
-    Node *node1 = nullptr;
-    Node *node2 = nullptr;
+    // check existence
+    if (!nodeMap.contains(name1)) {
+        QMessageBox::warning(this, "Error", QString("Start node '%1' does not exist").arg(name1));
+        return;
+    }
+    if (!nodeMap.contains(name2)) {
+        QMessageBox::warning(this, "Error", QString("End node '%1' does not exist").arg(name2));
+        return;
+    }
 
-    // find the nodes in the scene by label
-    for (QGraphicsItem *item : scene->items()) {
-        Node *n = dynamic_cast<Node*>(item);
-        if (n) {
-            if (n->label->toPlainText() == name1) node1 = n;
-            if (n->label->toPlainText() == name2) node2 = n;
+    Node *node1 = nodeMap.value(name1);
+    Node *node2 = nodeMap.value(name2);
+
+    // extra null-checks (defensive)
+    if (!node1 || !node2) {
+        QMessageBox::warning(this, "Error", "Node pointer invalid");
+        return;
+    }
+
+    Edge *edge = new Edge(node1, node2, weight);
+    scene->addItem(edge);
+}
+
+// ========================= DIJKSTRA ==============================
+
+void MainWindow::on_dijekstra_clicked()
+{
+    QString source = ui->source->text().trimmed();
+    QString dest = ui->dest->text().trimmed();
+
+    if (source.isEmpty() || dest.isEmpty()) {
+        ui->pathOut->setPlainText("Enter Source and Destination");
+        return;
+    }
+
+    if (!graphAdjacency.contains(source) || !graphAdjacency.contains(dest)) {
+        ui->pathOut->setPlainText("Invalid source/destination!");
+        return;
+    }
+
+    QMap<QString,int> dist;
+    QMap<QString,QString> parent;
+
+    // initialize
+    const QList<QString> keys = graphAdjacency.keys();
+    for (const QString &node : keys) {
+        dist[node] = INT_MAX;
+        parent[node] = "";
+    }
+
+    dist[source] = 0;
+
+    using Pair = pair<int, QString>;
+    priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
+    pq.push({0, source});
+
+    while (!pq.empty()) {
+        auto top = pq.top();
+        int d = top.first;
+        QString u = top.second;
+        pq.pop();
+
+        if (d > dist[u]) continue;
+
+        // iterate neighbours (QList<QPair<QString,int>>)
+        const QList<QPair<QString,int>> &nbrs = graphAdjacency[u];
+        for (int i = 0; i < nbrs.size(); ++i) {
+            const QPair<QString,int> &nbr = nbrs.at(i);
+            QString v = nbr.first;
+            int w = nbr.second;
+
+            if (dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+                parent[v] = u;
+                pq.push({dist[v], v});
+            }
         }
     }
 
-    if (!node1 || !node2) {
-        return; // nodes not found
+    if (!dist.contains(dest) || dist[dest] == INT_MAX) {
+        ui->pathOut->setPlainText("No Path Found!");
+        return;
     }
 
-    // create the edge
-    QPointF p1 = node1->mapToScene(node1->rect().center());
-    QPointF p2 = node2->mapToScene(node2->rect().center());
-    QGraphicsLineItem *line = new QGraphicsLineItem(QLineF(p1, p2));
-    scene->addItem(line);
+    QStringList path;
+    QString cur = dest;
+    while (cur != source && !cur.isEmpty()) {
+        path.prepend(cur);
+        cur = parent[cur];
+    }
+    path.prepend(source);
 
-    // store edge in both nodes for movement
-    node1->edges.append(line);
-    node2->edges.append(line);
-
-    // mark which end is which
-    line->setData(0, 0); // temporary, not used for now
-    // store p1/p2 info for automatic movement
-    line->setData(1, QVariant::fromValue<void*>(node1));
-    line->setData(2, QVariant::fromValue<void*>(node2));
+    ui->pathOut->setPlainText(QString("Cost: %1 | Path: %2")
+                             .arg(dist[dest])
+                             .arg(path.join(" -> ")));
 }
 
